@@ -10,10 +10,13 @@ export default {
     extend: {
       fontFamily: {
         inter: ["var(--font-inter)"],
+        lobster: ["var(--font-lobster)"],
       },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        globalBackground: "var(--global-background)",
+        globalForeground: "var(--global-foreground)",
+        borderColor: "var(--border-color)",
+        primaryBg: "var(--primary-bg)",
       },
     },
   },
