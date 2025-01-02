@@ -53,7 +53,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
 
       await createUser({ clerkId, firstName, lastName, email });
 
-      return new NextResponse("user created", { status: 201 });
+      return new NextResponse("User created", { status: 201 });
     }
 
     return new NextResponse("Event ignored", { status: 200 });

@@ -14,7 +14,7 @@ export const ResultArea = ({
   transcription,
 }: ResultAreaProps) => {
   return (
-    <div className="border-2 border-borderColor rounded-2xl   h-[500px] overflow-x-auto relative">
+    <div className="border-2 border-borderColor rounded-2xl overflow-x-auto relative h-[500px]">
       <div className="grid grid-cols-3 border-b-2 border-borderColor h-20 sticky top-0 overflow-hidden bg-primaryBg">
         <div className="flex flex-col items-center justify-center border-r-2 border-borderColor text-borderColor">
           <p>Language:</p>

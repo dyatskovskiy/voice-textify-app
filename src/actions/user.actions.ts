@@ -1,23 +1,26 @@
-import UserModel, { IUser } from "@/models/user.model";
-import connectDB from "@/config/database";
 import { NextResponse } from "next/server";
-
-interface IUserDto {
-  clerkId: string;
-  email: string;
-  firstName: string | null;
-  lastName: string | null;
-}
+import prisma from "@/lib/prisma";
+import { IUser, IUserDto } from "@/interfaces/User.interface";
 
 export const createUser = async (
   userDto: IUserDto
 ): Promise<IUser | NextResponse> => {
   try {
-    await connectDB();
+    const { clerkId, firstName, lastName, email } = userDto;
 
-    return await UserModel.create(userDto);
+    const newUser = await prisma.user.create({
+      data: {
+        clerkId,
+        firstName: firstName ?? "",
+        lastName: lastName ?? "",
+        email,
+      },
+    });
+    return newUser;
   } catch (error) {
     console.log(error);
     return new NextResponse("Error", { status: 500 });
+  } finally {
+    prisma.$disconnect();
   }
 };
