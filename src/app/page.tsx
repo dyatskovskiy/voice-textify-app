@@ -1,6 +1,7 @@
 import { Container } from "./components/Container";
 import { FileUploadArea } from "./components/FileUploadArea";
 import { MainBoard } from "./components/MainBoard";
+import { ResultArea } from "./components/ResultArea";
 import { Sidebar } from "./components/Sidebar";
 
 export default function Home() {
@@ -10,6 +11,8 @@ export default function Home() {
         <Sidebar />
         <MainBoard>
           <FileUploadArea />
+
+          <ResultArea language="eng" duration="1m 20s" wordsQuantity="1400" />
         </MainBoard>
       </div>
     </Container>
