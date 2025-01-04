@@ -8,14 +8,29 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  clerkId   String   @unique
-  email     String   @unique
-  firstName String   @default("")
-  lastName  String   @default("")
-  createdAt DateTime @default(now())
-  updateAt  DateTime @updatedAt
+  id             Int             @id @default(autoincrement())
+  clerkId        String          @unique
+  email          String          @unique
+  firstName      String          @default("")
+  lastName       String          @default("")
+  createdAt      DateTime        @default(now())
+  updateAt       DateTime        @updatedAt
+  transcriptions Transcription[]
 
   @@index([clerkId, email])
   @@map("users")
+}
+
+model Transcription {
+  id            Int      @id @default(autoincrement())
+  filename      String   @db.VarChar(50)
+  text          String
+  duration      Float
+  language      String   @db.Char(2)
+  wordsQuantity Int
+  createdAt     DateTime @default(now())
+  owner         User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId       Int
+
+  @@map("transcriptions")
 }

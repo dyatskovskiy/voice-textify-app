@@ -3,15 +3,10 @@ import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { createUser } from "@/actions/user.actions";
+import config from "@/config";
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
-  const SIGNING_SECRET = process.env.SIGNING_SECRET;
-
-  if (!SIGNING_SECRET) {
-    throw new Error(
-      "Error: Please add SIGNING_SECRET from Clerk Dashboard to .env or .env.local"
-    );
-  }
+  const SIGNING_SECRET = config.SIGNING_SECRET!;
 
   const wh = new Webhook(SIGNING_SECRET);
 

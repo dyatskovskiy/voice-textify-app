@@ -1,8 +1,51 @@
 "use client";
 
-import React from "react";
+import { useAuth } from "@clerk/nextjs";
+import React, { useEffect, useState } from "react";
 
 export const FileUploadArea = () => {
+  const [file, setFile] = useState<File | null>(null);
+  const [message, setMessage] = useState<string>("");
+  const { userId } = useAuth();
+
+  useEffect(() => {
+    if (file) {
+      (async function () {
+        try {
+          const currentUser = await fetch(`/api/users/${userId}`, {
+            method: "GET",
+          })
+            .then((r) => r.json())
+            .catch(() => setMessage("Something went wrong. Try again, please"));
+
+          const formData = new FormData();
+
+          formData.append("audio", file);
+
+          const fileDetails = await fetch("/api/file", {
+            method: "POST",
+            body: formData,
+          }).then((r) =>
+            r
+              .json()
+              .catch(() =>
+                setMessage("Something went wrong. Try again, please")
+              )
+          );
+
+          const { fileName, filePath } = fileDetails.data;
+
+          await fetch("/api/transcriptions", {
+            method: "POST",
+            body: JSON.stringify({ fileName, filePath, currentUser }),
+          }).then((r) => console.log(r.json()));
+        } catch {
+          setMessage("File Upload Error");
+        }
+      })();
+    }
+  }, [file, userId]);
+
   const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
 
@@ -10,12 +53,9 @@ export const FileUploadArea = () => {
       const file = event.dataTransfer.files[0];
 
       if (file && file.type.startsWith("audio/")) {
-        console.log(file);
-
-        try {
-        } catch (error) {
-          console.log(error);
-        }
+        setFile(file);
+      } else {
+        setMessage("Please, choose an audio file");
       }
     }
   };
@@ -30,12 +70,9 @@ export const FileUploadArea = () => {
     const file = event.target.files?.[0];
 
     if (file && file.type.startsWith("audio/")) {
-      console.log(file);
-
-      try {
-      } catch (error) {
-        console.log(error);
-      }
+      setFile(file);
+    } else {
+      setMessage("Please, choose an audio file");
     }
   };
 
@@ -60,6 +97,8 @@ export const FileUploadArea = () => {
         <p className="text-center text-borderColor">
           Supported formats: MP3, WAV, M4A (max 25 MB)
         </p>
+
+        <p className="text-red-600">{message}</p>
       </div>
     </label>
   );

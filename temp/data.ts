@@ -1,0 +1,42 @@
+export const transcriptions = [
+  {
+    id: 1,
+    filename: "audio1.mp3",
+    text: "This is the transcription text for audio1.",
+    duration: 120.5,
+    wordsQuantity: 20,
+    createdAt: new Date("2023-12-31T10:00:00Z"),
+  },
+  {
+    id: 2,
+    filename: "audio2.mp3",
+    text: "Here is another example transcription for audio2.",
+    duration: 180.0,
+    wordsQuantity: 35,
+    createdAt: new Date("2023-12-31T11:00:00Z"),
+  },
+  {
+    id: 3,
+    filename: "audio3.mp3",
+    text: "Audio3 contains this transcription text.",
+    duration: 150.75,
+    wordsQuantity: 25,
+    createdAt: new Date("2023-12-31T12:00:00Z"),
+  },
+  {
+    id: 4,
+    filename: "audio4.mp3",
+    text: "The fourth audio transcription goes here.",
+    duration: 200.3,
+    wordsQuantity: 40,
+    createdAt: new Date("2023-12-31T13:00:00Z"),
+  },
+  {
+    id: 5,
+    filename: "audio5.mp3",
+    text: "Lastly, this is the transcription for audio5.",
+    duration: 95.2,
+    wordsQuantity: 15,
+    createdAt: new Date("2023-12-31T14:00:00Z"),
+  },
+];
