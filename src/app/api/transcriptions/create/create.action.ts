@@ -1,27 +1,16 @@
 import prisma from "@/lib/prisma";
 import {
   ICreateTranscriptionDto,
-  ITranscription,
+  ITranscriptionApi,
 } from "@/interfaces/transcription.interface";
 
 export const createTranscription = async (
-  transcriptionDto: ICreateTranscriptionDto
-): Promise<ITranscription | void> => {
+  transcriptionDto: ICreateTranscriptionDto,
+): Promise<ITranscriptionApi> => {
   try {
     return await prisma.transcription.create({
       data: transcriptionDto,
     });
-  } catch (error) {
-    console.error(error);
-    throw error;
-  } finally {
-    prisma.$disconnect();
-  }
-};
-
-export const getAllTranscriptions = async (): Promise<ITranscription[]> => {
-  try {
-    return await prisma.transcription.findMany();
   } catch (error) {
     console.error(error);
     throw error;

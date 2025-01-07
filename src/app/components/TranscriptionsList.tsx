@@ -16,11 +16,9 @@ export const TranscriptionsList = ({
       {transcriptions.length > 0 ? (
         <ul className="flex flex-col gap-1">
           {transcriptions.map((item) => {
-            const { id, filename } = item;
-
             return (
-              <li key={id}>
-                <TrancsriptionItem filename={filename} />
+              <li key={item.id}>
+                <TrancsriptionItem transcription={item} />
               </li>
             );
           })}

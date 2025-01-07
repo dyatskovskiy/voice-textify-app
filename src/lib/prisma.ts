@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 const globalForPrisma = global as typeof globalThis & { prisma?: PrismaClient };
 
-const prisma = globalForPrisma.prisma || new PrismaClient({ log: ["query"] });
+const prisma = globalForPrisma.prisma || new PrismaClient({ log: ["error"] });
 
 if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;

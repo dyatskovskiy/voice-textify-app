@@ -1,4 +1,4 @@
-export interface ITranscription {
+export interface ITranscriptionApi {
   id: number;
   filename: string;
   text: string;
@@ -9,7 +9,21 @@ export interface ITranscription {
   createdAt: Date;
 }
 
-export type ICreateTranscriptionDto = Omit<ITranscription, "id" | "createdAt">;
+export interface ITranscription {
+  duration: string;
+  createdAt: string;
+  filename: string;
+  wordsQuantity: number;
+  language: string;
+  id: number;
+  text: string;
+  ownerId: number;
+}
+
+export type ICreateTranscriptionDto = Omit<
+  ITranscriptionApi,
+  "id" | "createdAt"
+>;
 
 export interface ITranscriptionResponse {
   metadata: {

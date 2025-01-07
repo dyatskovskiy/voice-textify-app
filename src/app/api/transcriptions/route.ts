@@ -1,14 +1,13 @@
 import {
-  createTranscription,
-  getAllTranscriptions,
-} from "@/actions/transcription.actions";
-import {
   IParsedTranscription,
   ITranscriptionResponse,
 } from "@/interfaces/transcription.interface";
 import { parseTranscriptionResponse, transcribeFile } from "@/lib/deepgram";
-import { getFileBuffer } from "@/lib/file";
+import { deleteFile, getFileBuffer } from "@/lib/file";
 import { NextRequest, NextResponse } from "next/server";
+import { mapResponse } from "@/app/api/transcriptions/getAll/mappers";
+import { getAllTranscriptions } from "@/app/api/transcriptions/getAll/getAll.action";
+import { createTranscription } from "@/app/api/transcriptions/create/create.action";
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
   const { fileName, filePath, currentUser } = await req.json();
@@ -22,7 +21,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
   try {
     const response: ITranscriptionResponse = await transcribeFile(
       extension,
-      fileBuffer
+      fileBuffer,
     );
 
     const transcription: IParsedTranscription =
@@ -34,19 +33,20 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
       ...transcription,
     });
 
+    deleteFile(filePath);
     return NextResponse.json(
       {
         message: "Transcription created successfully",
         data: savedTranscription,
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     console.error("Deepgram API error:", error);
 
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
@@ -55,13 +55,15 @@ export const GET = async (): Promise<NextResponse> => {
   try {
     const transcriptions = await getAllTranscriptions();
 
-    return NextResponse.json(transcriptions, { status: 200 });
+    const response = mapResponse(transcriptions);
+
+    return NextResponse.json(response, { status: 200 });
   } catch (error) {
     console.error(error);
 
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

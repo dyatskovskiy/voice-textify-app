@@ -23,7 +23,7 @@ model User {
 
 model Transcription {
   id            Int      @id @default(autoincrement())
-  filename      String   @db.VarChar(50)
+  filename      String
   text          String
   duration      Float
   language      String   @db.Char(2)

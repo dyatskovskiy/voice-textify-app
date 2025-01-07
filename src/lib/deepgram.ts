@@ -1,4 +1,4 @@
-import config from "../config";
+import config from "../config/config";
 import {
   IParsedTranscription,
   ITranscriptionResponse,
@@ -6,7 +6,7 @@ import {
 
 export const transcribeFile = async (
   fileExtension: string,
-  fileBuffer: Buffer
+  fileBuffer: Buffer,
 ): Promise<ITranscriptionResponse> => {
   const response = await fetch(config.DEEPGRAM_URL!, {
     method: "POST",
@@ -18,14 +18,14 @@ export const transcribeFile = async (
   });
 
   if (!response.ok) {
-    throw new Error(`Deppgram API error: ${response.statusText}`);
+    throw new Error(`Deepgram API error: ${response.statusText}`);
   }
 
   return response.json();
 };
 
 export const parseTranscriptionResponse = (
-  response: ITranscriptionResponse
+  response: ITranscriptionResponse,
 ): IParsedTranscription => {
   return {
     text: response.results.channels[0].alternatives[0].transcript,

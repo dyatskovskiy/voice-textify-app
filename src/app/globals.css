@@ -9,6 +9,27 @@
   --primary-bg: #292524;
 }
 
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background-color: var(--primary-bg);
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 100vh;
+    background-color: var(--border-color);
+    border: 2px solid var(--border-color);
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #68635f;
+  }
+}
+
 body {
   color: var(--global-foreground);
   background: var(--global-background);

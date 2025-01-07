@@ -14,25 +14,26 @@ export const ResultArea = ({
   transcription,
 }: ResultAreaProps) => {
   return (
-    <div className="border-2 border-borderColor rounded-2xl overflow-x-auto relative h-[500px]">
-      <div className="grid grid-cols-3 border-b-2 border-borderColor h-20 sticky top-0 overflow-hidden bg-primaryBg">
-        <div className="flex flex-col items-center justify-center border-r-2 border-borderColor text-borderColor">
-          <p>Language:</p>
-          <p>{language}</p>
-        </div>
+    <>
+      <div className="border-2 border-borderColor rounded-2xl overflow-x-auto relative ">
+        <div className="grid grid-cols-3 h-20 sticky top-0 overflow-hidden bg-primaryBg">
+          <div className="flex flex-col items-center justify-center border-r-2 border-borderColor text-borderColor">
+            <p>Language:</p>
+            <p className="text-globalForeground">{language}</p>
+          </div>
 
-        <div className="flex flex-col items-center justify-center border-r-2 border-borderColor text-borderColor">
-          <p>Duration:</p>
-          <p>{duration}</p>
-        </div>
+          <div className="flex flex-col items-center justify-center border-r-2 border-borderColor text-borderColor">
+            <p>Duration:</p>
+            <p className="text-globalForeground">{duration}</p>
+          </div>
 
-        <div className="flex flex-col items-center justify-center text-borderColor">
-          <p>Words:</p>
-          <p>{wordsQuantity}</p>
+          <div className="flex flex-col items-center justify-center text-borderColor">
+            <p>Words:</p>
+            <p className="text-globalForeground">{wordsQuantity}</p>
+          </div>
         </div>
       </div>
-
-      <div className="p-4">
+      <div className="p-4 overflow-y-scroll scrollbar h-[400px]">
         <p>
           Result{transcription} Lorem ipsum dolor sit, amet consectetur
           adipisicing elit. Inventore, mollitia error. Sed commodi reiciendis
@@ -151,6 +152,6 @@ export const ResultArea = ({
           cupiditate?
         </p>
       </div>
-    </div>
+    </>
   );
 };

@@ -2,8 +2,8 @@ import { WebhookEvent } from "@clerk/nextjs/server";
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { createUser } from "@/actions/user.actions";
-import config from "@/config";
+import config from "@/config/config";
+import { createUser } from "@/app/api/clerk-webhook/createUser/create.action";
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
   const SIGNING_SECRET = config.SIGNING_SECRET!;

@@ -29,8 +29,8 @@ export const FileUploadArea = () => {
             r
               .json()
               .catch(() =>
-                setMessage("Something went wrong. Try again, please")
-              )
+                setMessage("Something went wrong. Try again, please"),
+              ),
           );
 
           const { fileName, filePath } = fileDetails.data;
@@ -38,7 +38,7 @@ export const FileUploadArea = () => {
           await fetch("/api/transcriptions", {
             method: "POST",
             body: JSON.stringify({ fileName, filePath, currentUser }),
-          }).then((r) => console.log(r.json()));
+          });
         } catch {
           setMessage("File Upload Error");
         }
@@ -65,7 +65,7 @@ export const FileUploadArea = () => {
   };
 
   const handleFileInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = event.target.files?.[0];
 
