@@ -16,6 +16,7 @@ export default {
         globalBackground: "var(--global-background)",
         globalForeground: "var(--global-foreground)",
         borderColor: "var(--border-color)",
+        hoverColor: "var(--hover-color)",
         primaryBg: "var(--primary-bg)",
       },
     },

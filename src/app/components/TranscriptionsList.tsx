@@ -1,5 +1,6 @@
+"use client";
+
 import { ITranscription } from "@/interfaces/transcription.interface";
-import React from "react";
 import { TrancsriptionItem } from "./TrancsriptionItem";
 
 interface TranscriptionsListProps {
