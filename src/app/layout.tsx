@@ -3,6 +3,7 @@ import { Inter, Lobster } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider, SignIn, SignedIn, SignedOut } from "@clerk/nextjs";
 import { Header } from "./components/Header";
+import React from "react";
 
 const inter = Inter({
   subsets: ["latin"],

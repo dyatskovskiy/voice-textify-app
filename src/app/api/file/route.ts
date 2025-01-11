@@ -18,7 +18,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         {
           error: "File not founded",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -29,7 +29,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         {
           error: "Wrong file format",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -40,7 +40,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         message: "File successfully uploaded",
         data: { fileName: name, filePath: savedFilePath },
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     return NextResponse.json(
@@ -48,7 +48,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
         error: "Failed to upload the file",
         details: error instanceof Error ? error.message : error,
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

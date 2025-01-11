@@ -7,9 +7,13 @@ import { MainBoard } from "./components/MainBoard";
 import { ResultArea } from "./components/ResultArea";
 import { Sidebar } from "./components/Sidebar";
 import { TranscriptionsList } from "./components/TranscriptionsList";
-import { useTranscriptionsStore } from "@/app/stores";
+import { useTranscriptionsStore, useUserStore } from "@/app/stores";
+import { useAuth } from "@clerk/nextjs";
 
 export default function Home() {
+  const { userId: clerkId } = useAuth();
+  const user = useUserStore((state) => state.user);
+
   const transcriptions = useTranscriptionsStore(
     (state) => state.transcriptions,
   );
@@ -19,20 +23,35 @@ export default function Home() {
   );
 
   useEffect(() => {
+    if (user) {
+      (async function () {
+        try {
+          const response = await fetch(`api/transcriptions/${user.id}`, {
+            method: "GET",
+          });
+
+          const transcriptions = await response.json();
+
+          useTranscriptionsStore.getState().setTranscriptions(transcriptions);
+        } catch (err) {
+          console.log(err);
+        }
+      })();
+    }
+  }, [user]);
+
+  useEffect(() => {
     (async function () {
-      try {
-        const response = await fetch("api/transcriptions/", {
+      if (clerkId) {
+        const user = await fetch(`api/users/${clerkId}`, {
           method: "GET",
-        });
+          credentials: "include",
+        }).then((r) => r.json());
 
-        const transcriptions = await response.json();
-
-        useTranscriptionsStore.getState().setTranscriptions(transcriptions);
-      } catch (err) {
-        console.log(err);
+        useUserStore.getState().setUser(user);
       }
     })();
-  }, []);
+  }, [clerkId]);
 
   return (
     <Container>

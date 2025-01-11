@@ -1,8 +1,8 @@
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { Webhook } from "svix";
 import { headers } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
 import config from "@/config/config";
+import { NextRequest, NextResponse } from "next/server";
 import { createUser } from "@/app/api/clerk-webhook/createUser/create.action";
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {

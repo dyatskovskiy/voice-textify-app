@@ -1,9 +1,14 @@
 import prisma from "@/lib/prisma";
 import { ITranscriptionApi } from "@/interfaces/transcription.interface";
 
-export const getAllTranscriptions = async (): Promise<ITranscriptionApi[]> => {
+export const getAllTranscriptions = async (
+  clientId: number,
+): Promise<ITranscriptionApi[]> => {
   try {
     return await prisma.transcription.findMany({
+      where: {
+        ownerId: clientId,
+      },
       orderBy: {
         createdAt: "desc",
       },

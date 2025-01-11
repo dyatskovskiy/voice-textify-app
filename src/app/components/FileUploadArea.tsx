@@ -1,23 +1,16 @@
 "use client";
-
-import { useAuth } from "@clerk/nextjs";
 import React, { useEffect, useState } from "react";
+import { useTranscriptionsStore, useUserStore } from "@/app/stores";
 
 export const FileUploadArea = () => {
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState<string>("");
-  const { userId } = useAuth();
+  const user = useUserStore((state) => state.user);
 
   useEffect(() => {
     if (file) {
       (async function () {
         try {
-          const currentUser = await fetch(`/api/users/${userId}`, {
-            method: "GET",
-          })
-            .then((r) => r.json())
-            .catch(() => setMessage("Something went wrong. Try again, please"));
-
           const formData = new FormData();
 
           formData.append("audio", file);
@@ -35,16 +28,18 @@ export const FileUploadArea = () => {
 
           const { fileName, filePath } = fileDetails.data;
 
-          await fetch("/api/transcriptions", {
+          const { data } = await fetch(`/api/transcriptions/${user?.id}`, {
             method: "POST",
-            body: JSON.stringify({ fileName, filePath, currentUser }),
-          });
+            body: JSON.stringify({ fileName, filePath }),
+          }).then((r) => r.json());
+
+          useTranscriptionsStore.getState().addNew(data);
         } catch {
           setMessage("File Upload Error");
         }
       })();
     }
-  }, [file, userId]);
+  }, [file, user?.id]);
 
   const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
