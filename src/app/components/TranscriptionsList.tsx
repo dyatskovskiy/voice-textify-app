@@ -2,6 +2,7 @@
 
 import { ITranscription } from "@/interfaces/transcription.interface";
 import { TrancsriptionItem } from "./TrancsriptionItem";
+import React from "react";
 
 interface TranscriptionsListProps {
   transcriptions: ITranscription[];
@@ -13,9 +14,9 @@ export const TranscriptionsList = ({
   return (
     <>
       <h2>Your last transcriptions:</h2>
-      <span className="block w-full bg-borderColor h-px my-2" />
+      <span className="block w-full bg-borderColor h-px mt-1 mb-4" />
       {transcriptions.length > 0 ? (
-        <ul className="flex flex-col gap-1">
+        <ul className="px-1 h-[95%] overflow-y-scroll overflow-x-hidden  scrollbar flex flex-col gap-2 ">
           {transcriptions.map((item) => {
             return (
               <li key={item.id}>

@@ -6,7 +6,7 @@ interface SidebarProps {
 
 export const Sidebar = ({ children }: SidebarProps) => {
   return (
-    <aside className="border-2 border-l-0 border-borderColor bg-primaryBg p-4 rounded-2xl">
+    <aside className="border-2 border-l-0 border-borderColor bg-primaryBg p-4 rounded-2xl h-[calc(100vh-80px)] overflow-hidden">
       {children}
     </aside>
   );
