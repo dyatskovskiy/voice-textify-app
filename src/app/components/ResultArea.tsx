@@ -30,9 +30,6 @@ export const ResultArea = ({ transcription }: ResultAreaProps) => {
       </div>
       <div className="p-4 max-h-[400px] overflow-y-scroll scrollbar">
         <p>{text}</p>
-        <p>{text}</p>
-        <p>{text}</p>
-        <p>{text}</p>
       </div>
     </>
   );
