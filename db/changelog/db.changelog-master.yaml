@@ -1,0 +1,102 @@
+databaseChangeLog:
+  - changeSet:
+      id: '1'
+      author: dyatskovskiy 
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints: 
+                    primaryKey: true
+              - column:
+                  name: clerk_id
+                  type: varchar(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(255)
+                  defaultValue: ''
+              - column:
+                  name: last_name
+                  type: varchar(255)
+                  defaultValue: ''
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: update_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+        - addIndex:
+            tableName: users
+            columns:
+              - column:
+                  name: clerk_id
+              - column:
+                  name: email
+
+  - changeSet:
+      id: "2"
+      author: dyatskovskiy
+      changes:
+        - createTable:
+            tableName: transcriptions
+            columns:
+              - column:
+                  name: id
+                  type: serial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: filename
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: text
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: duration
+                  type: double precision
+                  constraints:
+                    nullable: false
+              - column:
+                  name: language
+                  type: char(2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: words_quantity
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: CURRENT_TIMESTAMP
+              - column:
+                  name: owner_id
+                  type: int
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: foreignKey
+            baseTableName: transcriptions
+            baseColumnNames: owner_id
+            referencedTableName: users
+            referencedColumnNames: id
+            onDelete: CASCADE
