@@ -6,9 +6,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { createUser } from "@/app/api/clerk-webhook/createUser/create.action";
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
-  const SIGNING_SECRET = config.SIGNING_SECRET!;
+  const CLERK_WEBHOOK_SIGNING_SECRET = config.CLERK_WEBHOOK_SIGNING_SECRET!;
 
-  const wh = new Webhook(SIGNING_SECRET);
+  const wh = new Webhook(CLERK_WEBHOOK_SIGNING_SECRET);
 
   const headerPayload = await headers();
   const svix_id = headerPayload.get("svix-id");
