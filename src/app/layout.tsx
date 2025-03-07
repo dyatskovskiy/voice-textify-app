@@ -5,6 +5,8 @@ import { ClerkProvider, SignIn, SignedIn, SignedOut } from "@clerk/nextjs";
 import { Header } from "./components/Header";
 import React from "react";
 import { Container } from "@/app/components/Container";
+import useGloballAppStateStore from "@/app/stores/globalAppState.store";
+import { LoaderOverlay } from "@/app/components/LoaderOverlay";
 
 const inter = Inter({
   subsets: ["latin"],

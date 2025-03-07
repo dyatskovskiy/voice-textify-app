@@ -1,15 +1,19 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useTranscriptionsStore, useUserStore } from "@/app/stores";
+import useGloballAppStateStore from "@/app/stores/globalAppState.store";
 
 export const FileUploadArea = () => {
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState<string>("");
   const user = useUserStore((state) => state.user);
+  const { setIsLoading, setIsError } = useGloballAppStateStore.getState();
 
   useEffect(() => {
     if (file) {
       (async function () {
+        setIsLoading(true);
+        setIsError(false);
         try {
           const formData = new FormData();
 
@@ -19,11 +23,9 @@ export const FileUploadArea = () => {
             method: "POST",
             body: formData,
           }).then((r) =>
-            r
-              .json()
-              .catch(() =>
-                setMessage("Something went wrong. Try again, please"),
-              ),
+            r.json().catch(() => {
+              setMessage("Something went wrong. Try again, please");
+            }),
           );
 
           const { fileName, filePath } = fileDetails.data;
@@ -34,14 +36,18 @@ export const FileUploadArea = () => {
           }).then((r) => r.json());
 
           useTranscriptionsStore.getState().addNew(data);
+          useTranscriptionsStore.getState().setActiveTranscription(data);
         } catch {
           setMessage("File Upload Error");
+          setIsError(true);
+        } finally {
+          setIsLoading(false);
         }
       })();
     }
-  }, [file, user?.id]);
+  }, [file, setIsError, setIsLoading, user?.id]);
 
-  const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
 
     if (event.dataTransfer.files.length > 0) {
