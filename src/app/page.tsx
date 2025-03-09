@@ -69,7 +69,7 @@ export default function Home() {
       <Sidebar>
         <TranscriptionsList transcriptions={transcriptions} />
       </Sidebar>
-      <MainBoard></MainBoard>
+      <MainBoard />
     </div>
   );
 }

@@ -16,7 +16,7 @@ export const TranscriptionsList = ({
       <h2>Your last transcriptions:</h2>
       <span className="block w-full bg-borderColor h-px mt-1 mb-4" />
       {transcriptions.length > 0 ? (
-        <ul className="px-1 h-[95%] overflow-y-scroll overflow-x-hidden  scrollbar flex flex-col gap-2 ">
+        <ul className="px-1 h-[95%] overflow-y-auto scrollbar flex flex-col gap-2 z-0">
           {transcriptions.map((item) => {
             return (
               <li key={item.id}>
