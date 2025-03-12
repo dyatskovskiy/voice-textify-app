@@ -3,7 +3,7 @@ import { Bars } from "react-loader-spinner";
 
 export const LoaderOverlay = () => {
   return (
-    <div className="absolute z-100 w-screen h-screen flex flex-col justify-center items-center bg-black bg-opacity-70">
+    <div className="absolute z-[10000] w-screen h-screen flex flex-col justify-center items-center bg-black bg-opacity-70">
       <Bars
         height="80"
         width="80"

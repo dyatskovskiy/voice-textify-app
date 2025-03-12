@@ -9,11 +9,13 @@ interface PopoverContextProps {
 export const PopoverContext = createContext<PopoverContextProps>(null!);
 
 export const usePopoverContext = () => {
-  const props = useContext(PopoverContext);
+  const context = useContext(PopoverContext);
 
-  if (!props) {
-    throw new Error("No popover context provided");
+  if (!context) {
+    throw new Error(
+      "This component should be used within a <Popover> component.",
+    );
   }
 
-  return props;
+  return context;
 };

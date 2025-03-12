@@ -23,11 +23,9 @@ const PopoverComponent: FC<PopoverComponentProps> = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const onOpen = () => {
-    console.log("onOpen");
     setIsOpen(true);
   };
   const onClose = () => {
-    console.log("onClose");
     setIsOpen(false);
   };
 

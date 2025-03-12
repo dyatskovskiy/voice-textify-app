@@ -22,6 +22,7 @@ export const PopoverButton: FC<PopoverButtonProps> = ({
       onClick={(e) => {
         onClick?.(e);
         props.onOpen();
+        e.stopPropagation();
       }}
     >
       {children}

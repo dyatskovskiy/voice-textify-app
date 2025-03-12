@@ -8,12 +8,7 @@ interface IconProps extends ComponentPropsWithoutRef<"svg"> {
 
 export const Icon: FC<IconProps> = ({ name, className }) => {
   return (
-    <svg
-      className={classNames(
-        "h-4 w-4 fill-globalForeground stroke-transparent",
-        className,
-      )}
-    >
+    <svg className={classNames("h-4 w-4", className)}>
       <use href={`/images/icons.svg#${name}`} />
     </svg>
   );

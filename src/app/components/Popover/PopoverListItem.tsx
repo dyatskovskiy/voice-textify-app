@@ -8,7 +8,6 @@ interface PopoverListItemProps extends ComponentPropsWithoutRef<"button"> {
 }
 
 export const PopoverListItem: FC<PopoverListItemProps> = ({
-  onClick,
   className,
   children,
 }) => {
@@ -16,8 +15,7 @@ export const PopoverListItem: FC<PopoverListItemProps> = ({
 
   return (
     <button
-      onClick={(e) => {
-        onClick?.(e);
+      onClick={() => {
         props.onClose();
       }}
       className={classNames("relative z-10", className)}

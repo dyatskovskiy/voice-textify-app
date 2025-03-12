@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useTranscriptionsStore, useUserStore } from "@/app/stores";
-import useGloballAppStateStore from "@/app/stores/globalAppState.store";
+import useGlobalAppStateStore from "@/app/stores/globalAppState.store";
 
 export const FileUploadArea = () => {
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState<string>("");
   const user = useUserStore((state) => state.user);
-  const { setIsLoading, setIsError } = useGloballAppStateStore.getState();
+  const { setIsLoading, setIsError } = useGlobalAppStateStore.getState();
 
   useEffect(() => {
     if (file) {

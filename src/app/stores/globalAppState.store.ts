@@ -10,11 +10,11 @@ interface Action {
   setIsError: (error: boolean) => void;
 }
 
-const useGloballAppStateStore = create<State & Action>((set) => ({
+const useGlobalAppStateStore = create<State & Action>((set) => ({
   isLoading: false,
   isError: false,
   setIsLoading: (isLoading) => set(() => ({ isLoading: isLoading })),
   setIsError: (error) => set(() => ({ isError: error })),
 }));
 
-export default useGloballAppStateStore;
+export default useGlobalAppStateStore;

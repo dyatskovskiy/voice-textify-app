@@ -6,11 +6,11 @@ import { Sidebar } from "./components/Sidebar";
 import { TranscriptionsList } from "./components/TranscriptionsList";
 import { useTranscriptionsStore, useUserStore } from "@/app/stores";
 import { useAuth } from "@clerk/nextjs";
-import useGloballAppStateStore from "@/app/stores/globalAppState.store";
+import useGlobalAppStateStore from "@/app/stores/globalAppState.store";
 
 export default function Home() {
   const { userId: clerkId } = useAuth();
-  const { setIsLoading, setIsError } = useGloballAppStateStore.getState();
+  const { setIsLoading, setIsError } = useGlobalAppStateStore.getState();
   const user = useUserStore((state) => state.user);
 
   const transcriptions = useTranscriptionsStore(
@@ -41,7 +41,7 @@ export default function Home() {
 
   useEffect(() => {
     (async function () {
-      useGloballAppStateStore.getState().setIsLoading(true);
+      useGlobalAppStateStore.getState().setIsLoading(true);
 
       if (clerkId) {
         setIsLoading(true);

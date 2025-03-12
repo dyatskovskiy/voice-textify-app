@@ -18,6 +18,7 @@ export default {
         borderColor: "var(--border-color)",
         hoverColor: "var(--hover-color)",
         primaryBg: "var(--primary-bg)",
+        disabledColor: "var(--disabled-color)",
       },
     },
   },
