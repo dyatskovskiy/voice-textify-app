@@ -6,15 +6,12 @@ export const deleteTranscription = async (
   userId: number,
 ): Promise<ITranscriptionApi | undefined> => {
   try {
-    console.log(transcriptionId, userId);
     const transcription = await prisma.transcription.findUnique({
       where: {
         id: transcriptionId,
         ownerId: userId,
       },
     });
-
-    console.log(transcription);
 
     if (!transcription) {
       throw new Error("Transcription not found");

@@ -18,8 +18,6 @@ export const PATCH = async (
   }
   const { values } = await req.json();
 
-  console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", values);
-
   try {
     const newTranscription = await updateTranscription(
       transcriptionId,
