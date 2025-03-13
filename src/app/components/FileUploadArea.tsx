@@ -7,13 +7,13 @@ export const FileUploadArea = () => {
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState<string>("");
   const user = useUserStore((state) => state.user);
-  const { setIsLoading, setIsError } = useGlobalAppStateStore.getState();
+  const { setIsLoading, setError } = useGlobalAppStateStore.getState();
 
   useEffect(() => {
     if (file) {
       (async function () {
         setIsLoading(true);
-        setIsError(false);
+        setError(null);
         try {
           const formData = new FormData();
 
@@ -30,22 +30,30 @@ export const FileUploadArea = () => {
 
           const { fileName, filePath } = fileDetails.data;
 
-          const { data } = await fetch(`/api/transcriptions/${user?.id}`, {
-            method: "POST",
-            body: JSON.stringify({ fileName, filePath }),
-          }).then((r) => r.json());
+          const { data } = await fetch(
+            `/api/users/${user?.id}/transcriptions`,
+            {
+              method: "POST",
+              body: JSON.stringify({ fileName, filePath }),
+            },
+          ).then((r) => r.json());
 
           useTranscriptionsStore.getState().addNew(data);
           useTranscriptionsStore.getState().setActiveTranscription(data);
-        } catch {
+        } catch (err: unknown) {
           setMessage("File Upload Error");
-          setIsError(true);
+
+          if (err instanceof Error) {
+            setError(err.message);
+          } else {
+            setError("An unknown error occurred.");
+          }
         } finally {
           setIsLoading(false);
         }
       })();
     }
-  }, [file, setIsError, setIsLoading, user?.id]);
+  }, [file, setError, setIsLoading, user?.id]);
 
   const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();

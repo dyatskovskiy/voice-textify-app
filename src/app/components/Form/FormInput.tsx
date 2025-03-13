@@ -21,7 +21,7 @@ const FormInput: FC<FormInputProps> = ({
       type={type}
       value={formValues[name] ?? initialValue}
       className={classNames(
-        "rounded w-96 h-8 text-xl bg-primaryBg border border-borderColor focus:outline-none px-2 py-1",
+        "rounded w-full h-8 text-xl bg-primaryBg border border-borderColor focus:outline-none px-2 py-1",
         className,
       )}
       onChange={handleChange}

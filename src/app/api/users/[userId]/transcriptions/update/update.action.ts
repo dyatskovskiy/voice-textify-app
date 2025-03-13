@@ -6,6 +6,7 @@ export const updateTranscription = async (
   clientId: number,
   data: Record<string, unknown>,
 ): Promise<ITranscriptionApi | undefined> => {
+  console.log("data", data);
   try {
     return await prisma.transcription.update({
       where: { ownerId: clientId, id: transcriptionId },

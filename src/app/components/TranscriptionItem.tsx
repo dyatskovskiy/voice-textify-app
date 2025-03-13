@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ITranscription } from "@/interfaces/transcription.interface";
 import { useTranscriptionsStore, useUserStore } from "@/app/stores";
 import { Popover } from "@/app/components/Popover/Popover";
@@ -9,6 +9,7 @@ import { BaseModal } from "@/app/components/Modal";
 import { Form } from "@/app/components/Form/Form";
 import type { FormValues } from "@/app/components/Form/FormContext";
 import useGlobalAppStateStore from "@/app/stores/globalAppState.store";
+import Button from "@/app/components/Button";
 
 interface TranscriptionItemProps {
   transcription: ITranscription;
@@ -25,10 +26,11 @@ export const TranscriptionItem = ({
     useTranscriptionsStore.getState();
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const isLoading = useGlobalAppStateStore((state) => state.isLoading);
   const setIsLoading = useGlobalAppStateStore((state) => state.setIsLoading);
-  const setIsError = useGlobalAppStateStore((state) => state.setIsError);
+  const setError = useGlobalAppStateStore((state) => state.setError);
   const onEditOpen = () => {
     setIsEditModalOpen(true);
   };
@@ -39,23 +41,72 @@ export const TranscriptionItem = ({
 
   const onEditSubmit = async (values: FormValues) => {
     setIsLoading(true);
+    setError(null);
     try {
-      await fetch(`/api/transcriptions/${user?.id}`, {
+      await fetch(`api/users/${user?.id}/transcriptions/${id}`, {
         method: "PATCH",
-        body: JSON.stringify({ transcriptionId: id, updateValues: values }),
+        body: JSON.stringify({ values }),
         headers: { "Content-Type": "application/json" },
-      }).then((r) => r.json());
+      })
+        .then((r) => r.json())
+        .catch((err: unknown) => {
+          if (err instanceof Error) {
+            setError(err.message);
+          } else {
+            setError("An unknown error occurred.");
+          }
+        });
 
       const refreshedTranscriptions = await fetch(
-        `api/transcriptions/${user?.id}`,
+        `api/users/${user?.id}/transcriptions`,
         {
           method: "GET",
         },
       ).then((r) => r.json());
 
       setTranscriptions(refreshedTranscriptions);
-    } catch {
-      setIsError(true);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred.");
+      }
+    } finally {
+      setIsLoading(false);
+      setIsEditModalOpen(false);
+    }
+  };
+
+  const onDeleteOpen = () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const onDeleteClose = () => {
+    setIsDeleteModalOpen(false);
+  };
+
+  const onDeleteSubmit = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      await fetch(`api/users/${user?.id}/transcriptions/${id}`, {
+        method: "DELETE",
+      });
+
+      const refreshedTranscriptions = await fetch(
+        `api/users/${user?.id}/transcriptions`,
+        {
+          method: "GET",
+        },
+      ).then((r) => r.json());
+
+      setTranscriptions(refreshedTranscriptions);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred.");
+      }
     } finally {
       setIsLoading(false);
       setIsEditModalOpen(false);
@@ -102,6 +153,7 @@ export const TranscriptionItem = ({
               <Popover.ListItem>
                 <button
                   className={"flex flex-row gap-1 items-center min-w-min"}
+                  onClick={onDeleteOpen}
                 >
                   <Icon
                     name={"bin"}
@@ -122,8 +174,9 @@ export const TranscriptionItem = ({
         </div>
       </div>
 
+      {/* EDIT FILENAME MODAL */}
       <BaseModal isOpen={isEditModalOpen} onClose={onEditClose}>
-        <Form onSubmit={(values) => onEditSubmit(values)}>
+        <Form onSubmit={onEditSubmit}>
           <Form.Field title={"Enter new record name"} className={"mb-1"}>
             <Form.Input name={"filename"} initialValue={filename} />
           </Form.Field>
@@ -135,6 +188,22 @@ export const TranscriptionItem = ({
             Save
           </Form.SubmitButton>
         </Form>
+      </BaseModal>
+
+      {/*  DELETE TRANSCRIPTION MODAL */}
+
+      <BaseModal isOpen={isDeleteModalOpen} onClose={onDeleteClose}>
+        <span className="block w-96 text-center mb-4">
+          The deletion of transcription is irreversible. Are you sure?
+        </span>
+        <Button
+          className={"mx-auto"}
+          disabled={isLoading}
+          type={"button"}
+          onClick={onDeleteSubmit}
+        >
+          Yes, delete
+        </Button>
       </BaseModal>
     </>
   );

@@ -35,7 +35,7 @@ const FormComponent: FC<FormComponentProps> = ({
     <FormContext.Provider
       value={{ formValues: values, handleChange, handleSubmit }}
     >
-      <form onSubmit={handleSubmit} className={classNames("", className)}>
+      <form onSubmit={handleSubmit} className={classNames("w-96", className)}>
         {children}
       </form>
     </FormContext.Provider>

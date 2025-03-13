@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getUser } from "@/app/api/users/[clerkId]/getUser/getUser.action";
+import { getUser } from "@/app/api/clerk-users/[clerkId]/getUser/getUser.action";
 
 export const GET = async (
   req: NextRequest,

@@ -1,24 +1,11 @@
 import { FileUploadArea } from "@/app/components/FileUploadArea";
 import { ResultArea } from "@/app/components/ResultArea";
 import { useTranscriptionsStore } from "@/app/stores";
-import useGlobalAppStateStore from "@/app/stores/globalAppState.store";
-import { LoaderOverlay } from "@/app/components/LoaderOverlay";
-import { toast, Toaster } from "react-hot-toast";
 
 export const MainBoard = () => {
   const activeTranscription = useTranscriptionsStore(
     (state) => state.activeTranscription,
   );
-
-  const { isLoading, isError } = useGlobalAppStateStore.getState();
-
-  if (isLoading) {
-    return <LoaderOverlay />;
-  }
-
-  if (isError) {
-    toast.error("Oops, something went wrong");
-  }
 
   return (
     <>
@@ -33,7 +20,6 @@ export const MainBoard = () => {
           </p>
         )}
       </main>
-      <Toaster />
     </>
   );
 };
