@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 
 export const LoaderOverlay = () => {
   return createPortal(
-    <div className="absolute top-0 left0 z-[10000] w-screen h-screen flex flex-col justify-center items-center bg-black bg-opacity-70">
+    <div className="absolute top-0 left0 z-[10000] w-screen h-screen flex flex-col justify-center items-center bg-black bg-opacity-40">
       <Bars
         height="80"
         width="80"

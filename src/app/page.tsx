@@ -81,10 +81,6 @@ export default function Home() {
     })();
   }, [clerkId, setError, setIsLoading]);
 
-  if (isLoading) {
-    return <LoaderOverlay />;
-  }
-
   if (error) {
     toast.error(error);
   }
@@ -97,6 +93,8 @@ export default function Home() {
       <MainBoard />
 
       <Toaster />
+
+      {isLoading && <LoaderOverlay />}
     </div>
   );
 }
