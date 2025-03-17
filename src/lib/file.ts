@@ -3,9 +3,12 @@ import path from "path";
 
 export const saveFile = async (
   fileName: string,
-  originalFile: File
+  originalFile: File,
 ): Promise<string> => {
-  const uploadDir = path.join(process.cwd(), "temp");
+  const env = process.env.NODE_ENV;
+
+  const uploadDir =
+    env == "production" ? "/tmp" : path.join(process.cwd(), "temp");
 
   if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
