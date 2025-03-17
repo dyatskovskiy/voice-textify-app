@@ -61,11 +61,15 @@ export const FileUploadArea = () => {
     if (event.dataTransfer.files.length > 0) {
       const file = event.dataTransfer.files[0];
 
-      if (file && file.type.startsWith("audio/")) {
-        setFile(file);
-      } else {
+      if (!file || !file.type.startsWith("audio/")) {
         setMessage("Please, choose an audio file");
       }
+
+      if (file.size / 1024 / 1000 > 25) {
+        setMessage("File size is too large. It should be smaller than 25 MB");
+      }
+
+      setFile(file);
     }
   };
 
