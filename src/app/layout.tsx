@@ -24,7 +24,11 @@ const lobster = Lobster({
 
 export const metadata: Metadata = {
   title: "Voice Textify",
-  description: "Voice Textify app",
+  description:
+    "Voice Textify is an innovative platform for fast and accurate transcription of audio recordings. Using advanced speech recognition algorithms, the service converts your audio files into easily readable text, saving you time and boosting your work efficiency.",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
