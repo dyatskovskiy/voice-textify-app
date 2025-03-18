@@ -61,14 +61,6 @@ export const FileUploadArea = () => {
     if (event.dataTransfer.files.length > 0) {
       const file = event.dataTransfer.files[0];
 
-      if (!file || !file.type.startsWith("audio/")) {
-        setMessage("Please, choose an audio file");
-      }
-
-      if (file.size / 1024 / 1000 > 25) {
-        setMessage("File size is too large. It should be smaller than 25 MB");
-      }
-
       setFile(file);
     }
   };
@@ -80,13 +72,20 @@ export const FileUploadArea = () => {
   const handleFileInputChange = (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
+    setMessage("");
     const file = event.target.files?.[0];
 
-    if (file && file.type.startsWith("audio/")) {
-      setFile(file);
-    } else {
+    if (!file || !file.type.startsWith("audio/")) {
       setMessage("Please, choose an audio file");
+      return;
     }
+
+    if (file.size / 1024 / 1000 > 4.5) {
+      setMessage("File size is too large. It should be smaller than 4.5 MB");
+      return;
+    }
+
+    setFile(file);
   };
 
   return (
@@ -108,7 +107,7 @@ export const FileUploadArea = () => {
           Drag and drop an audio file here, or click to select
         </p>
         <p className="text-center text-borderColor">
-          Supported formats: MP3, WAV, M4A (max 25 MB)
+          Supported formats: MP3, WAV, M4A (max 4.5 MB)
         </p>
 
         <p className="text-red-600">{message}</p>
