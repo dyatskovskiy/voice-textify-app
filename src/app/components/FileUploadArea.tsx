@@ -86,6 +86,8 @@ export const FileUploadArea = () => {
     }
 
     setFile(file);
+
+    event.target.value = "";
   };
 
   return (

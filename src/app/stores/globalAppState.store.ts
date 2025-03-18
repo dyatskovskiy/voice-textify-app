@@ -11,7 +11,7 @@ interface Action {
 }
 
 const useGlobalAppStateStore = create<State & Action>((set) => ({
-  isLoading: false,
+  isLoading: true,
   error: null,
   setIsLoading: (isLoading) => set(() => ({ isLoading: isLoading })),
   setError: (error) => set(() => ({ error: error })),
