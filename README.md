@@ -1,6 +1,6 @@
 # Voice Textify
 
-**Voice Textify** is a web application that allows users to upload audio files and get real-time transcriptions. Built with Next.js, TypeScript, Prisma, PostgreSQL, and Zustand for state management.
+**Voice Textify** is an innovative platform for fast and accurate transcription of audio recordings. Using advanced speech recognition algorithms, the service converts your audio files into easily readable text.
 
 ## Features and stack
 
