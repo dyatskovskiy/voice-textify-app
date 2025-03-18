@@ -22,7 +22,7 @@ export const TranscriptionItem = ({
 
   const user = useUserStore((state) => state.user);
 
-  const { setActiveTranscription, setTranscriptions } =
+  const { activeTranscription, setActiveTranscription, setTranscriptions } =
     useTranscriptionsStore.getState();
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -101,6 +101,10 @@ export const TranscriptionItem = ({
       ).then((r) => r.json());
 
       setTranscriptions(refreshedTranscriptions);
+
+      if (id === activeTranscription?.id) {
+        setActiveTranscription(null);
+      }
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);

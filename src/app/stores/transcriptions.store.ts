@@ -8,7 +8,7 @@ interface State {
 
 interface Action {
   setTranscriptions: (transcriptions: ITranscription[]) => void;
-  setActiveTranscription: (activeTranscription: ITranscription) => void;
+  setActiveTranscription: (activeTranscription: ITranscription | null) => void;
   addNew: (transcription: ITranscription) => void;
 }
 
@@ -21,7 +21,7 @@ const useTranscriptionsStore = create<State & Action>((set) => ({
     })),
   setTranscriptions: (transcriptions: ITranscription[]) =>
     set(() => ({ transcriptions: transcriptions })),
-  setActiveTranscription: (activeTranscription: ITranscription) =>
+  setActiveTranscription: (activeTranscription: ITranscription | null) =>
     set(() => ({ activeTranscription: activeTranscription })),
 }));
 
